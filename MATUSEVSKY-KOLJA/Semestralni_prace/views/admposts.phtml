@@ -1,0 +1,153 @@
+<div class="row">
+  <div class="col-sm-12 text-center">
+      <div class="box">
+              <hr>
+              <h2 class="intro-text ">Seznam příspěvků</h2>
+              <hr>
+
+              <div class="row heading">
+                  <div class="col-sm-2 text-center">Název</div>
+                  <div class="col-sm-2 text-center">Autoři</div>
+                  <div class="col-sm-6 text-center">
+                      <div class="row">Recenze</div>
+                      <div class="row">
+                          <div class="col-sm-4 text-center">Recenzent</div>
+                          <div class="col-sm-3 text-center">Originalita</div>
+                          <div class="col-sm-1 text-center">Téma</div>
+                          <div class="col-sm-2 text-center">Jazyk</div>
+                          <div class="col-sm-1 text-center">Celkem</div>
+                          <div class="col-sm-1 text-center"></div>
+                      </div>
+                  </div>
+                  <div class="col-sm-2 text-center">Rozhodnutí</div>
+
+              </div>
+              <?php if($_SESSION['posts'] != null):
+              foreach ($_SESSION['posts'] as $post) :?>
+
+              <div class="row cell vertical-align">
+                  <div class="col-sm-2 text-center"><?= $post['name'] ?></div>
+                  <div class="col-sm-2 text-center"><?= $post['author'] ?></div>
+                  <div class="col-sm-6 text-center">
+                  <?php for($j = 0; $j < 3; $j++) :?>
+                      <form method="POST">
+                      <div class="row">
+                          <div class="col-sm-5 text-center">
+                              <div class="form-group">
+                                  <?php if($post['raters'][$j] != null) : ?>
+                                      <?php echo $post['raters'][$j]['name']; ?>
+                                      <input type="hidden" name="<?php echo $j; ?>" value="<?php echo $post['raters'][$j]['id_users']; ?>">
+                                  <?php endif; ?>
+                                  <?php if($post['raters'][$j] == null) : ?>
+                                  <select class="form-control" name="<?php echo $j; ?>" id="rater">
+                                      <?php foreach($_SESSION['raters'] as $rater) :
+                                          for($i = 0; $i < 3; $i++){
+                                              if($post['raters'][$i] == null){
+                                                  $rater['choosen'] = false;
+                                              }
+                                              else{
+                                                  if($post['raters'][$i]['id_users'] == $rater['id_users']){
+                                                      $rater['choosen'] = true;
+                                                      break;
+                                                  }
+                                                  else{
+                                                      $rater['choosen'] = false;
+                                                  }
+                                              }
+                                          }
+                                          if($rater['id_users'] != $post['users_id_users']):
+                                              if(!$rater['choosen']): ?>
+                                              <option value="<?php  echo $rater['id_users'] ?>"><?php  echo $rater['name'] ?></option>
+                                          <?php endif;
+                                      endif;
+                                      endforeach;
+                                      endif;?>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="col-sm-2 text-center">
+                              <?php if($post['ratings'][$j] == null || $post['ratings'][$j]['originality'] == "0"){
+                                  echo "-";
+                              }
+                              else{
+                                  echo $post['ratings'][$j]['originality'];
+                              }
+                              ?>
+                          </div>
+                          <div class="col-sm-1 text-center">
+                              <?php if($post['ratings'][$j] == null || $post['ratings'][$j]['topic'] == "0"){
+                                  echo "-";
+                              }
+                              else{
+                                  echo $post['ratings'][$j]['topic'];
+                              }
+                              ?>
+                          </div>
+                          <div class="col-sm-2 text-center">
+                              <?php if($post['ratings'][$j] == null || $post['ratings'][$j]['language_level'] == "0"){
+                                  echo "-";
+                              }
+                              else{
+                                  echo $post['ratings'][$j]['language_level'];
+                              }
+                              ?>
+                          </div>
+                          <div class="col-sm-1 text-center">
+                              <?php if($post['ratings'][$j] == null || $post['ratings'][$j]['avg'] == "0"){
+                                  echo "-";
+                                  $post['avg'][$j] = 0;
+                              }
+                              else{
+                                  echo $post['ratings'][$j]['avg'];
+                                  //$post['avg'] += $post['ratings'][$j]['avg'];
+                                  $post['avg'][$j] = $post['ratings'][$j]['avg'];
+                              }
+                              ?>
+                          </div>
+                          <div class="col-sm-1 text-center">
+                              <?php if($post['raters'][$j] != null) : ?>
+                                  <button type="submit" name="delete" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></button>
+                              <?php endif; ?>
+                              <?php if($post['raters'][$j] == null) : ?>
+                                  <button type="submit" name="choose" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-ok"></button>
+                              <?php endif; ?>
+                              <input type="hidden" name="id" value="<?php echo $post['id_posts']; ?>">
+                              <input type="hidden" name="jbutton" value="<?php echo $j; ?>">
+                          </div>
+                      </div>
+                      </form>
+                  <?php endfor; ?>
+                  </div>
+                  <div class="col-sm-2 text-center">
+                    <form method="POST">
+                        <?php if(in_array(0, $post['avg'])){
+                            echo "<a class=\"btn btn-lg btn-warning\"><span class=\"glyphicon glyphicon-hourglass\"></span></a>";
+                            $post['avg'] = 0;
+                        }
+                        else{
+                            $post['avg'] = ($post['avg'][0] + $post['avg'][1] +$post['avg'][2])/3;
+                        }
+                         ?>
+                        <?php if($post['avg'] > 2.5 && $post['avg'] != 0) : ?>
+                            <button type="submit" name="publish" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-thumbs-up"></button>
+                            <input type="hidden" name="id" value="<?php echo $post['id_posts']; ?>">
+                        <?php endif; ?>
+                        <?php if($post['avg'] < 2.5 && $post['avg'] != 0) : ?>
+                            <button type="submit" name="deny" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-thumbs-down"></button>
+                            <input type="hidden" name="id" value="<?php echo $post['id_posts']; ?>">
+                        <?php endif; ?>
+                    </form>
+                  </div>
+              </div>
+
+              <?php endforeach;
+              endif; ?>
+
+              <?php if($_SESSION['posts'] == null):?>
+              <div class="row cell ">
+                  <div class="col-sm-12 text-center alert">Žádné články nejsou k dispozici!</div>
+              </div>
+              <?php endif; ?>
+      </div>
+  </div>
+</div>

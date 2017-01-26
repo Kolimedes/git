@@ -1,0 +1,32 @@
+<div class="text-center">
+    <div class="box center">
+            <hr>
+            <h2 class="intro-text ">Nový příspěvek</h2>
+            <hr>
+
+        <form role="form-horizontal" class="cont-center" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="control-label" for="name">Název:</label>
+                <input type="text" name="name" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="author">Autoři</label>
+                <input type="text" name="author" class="form-control" id="author" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="abstract">Abstrakt</label>
+                <textarea name="abstract" class="form-control" rows="5" id="abstract" required></textarea>
+
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="file">Soubor</label>
+                <input type="file" name="fileToUpload"  id="file" accept=".pdf" required>
+                <p class="inputInfo">Nahrávejte pouze PDF soubory!</p>
+            </div>
+            <div class="form-group">
+                <button type="submit" name="send" class="btn btn-primary">Odeslat</button>
+                <a class="btn btn-default" href="users">Zpět</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="text-center">
+    <div class="box center">
+            <hr>
+            <h2 class="intro-text">Hodnocení příspěvku</h2>
+            <hr>
+
+        <div class="left">
+            <h2>Název: <?= $_SESSION['post']['name']?><h2>
+                    <h4>Autoři: <?= $_SESSION['post']['author']?><h3>
+                            <h4>Abstrakt:</h4>
+                            <p class="abstract box"><?= $_SESSION['post']['abstract']?></p>
+
+        </div>
+        <div><a class="btn btn-info" href="uploads/<?= $_SESSION['post']['filename']?>" target="_blank" download>Stáhnout <?= $_SESSION['post']['filename']?></a></div>
+        <form role="form-horizontal" class="cont-center" method="POST">
+            <div class="form-group">
+                <label class="control-label" for="originality">Originalita</label>
+                <select class="form-control" name="originality" id="originality"><?php
+                    $the_key = $_SESSION['rating']['originality'];
+                    if($the_key == 0){
+                        $the_key = 1;
+                    }
+                    foreach(array(
+                                1 => 'Velmi špatné',
+                                2 => 'Podprůměrné',
+                                3 => 'Průměrné',
+                                4 => 'Nadprůměrné',
+                                5 => 'Velmi dobré',
+                            ) as $key => $val){
+                        ?><option value="<?php echo $key; ?>"<?php
+                        if($key==$the_key)echo ' selected="selected"';
+                        ?>><?php echo $val; ?></option><?php
+                    }
+                    ?></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="topic">Téma</label>
+                <select class="form-control" name="topic" id="topic"><?php
+                    $the_key = $_SESSION['rating']['topic'];
+                    if($the_key == 0){
+                        $the_key = 1;
+                    }
+                    foreach(array(
+                                1 => 'Velmi špatné',
+                                2 => 'Podprůměrné',
+                                3 => 'Průměrné',
+                                4 => 'Nadprůměrné',
+                                5 => 'Velmi dobré',
+                            ) as $key => $val){
+                        ?><option value="<?php echo $key; ?>"<?php
+                        if($key==$the_key)echo ' selected="selected"';
+                        ?>><?php echo $val; ?></option><?php
+                    }
+                    ?></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="language">Jazyková úroveň</label>
+                <select class="form-control" name="language" id="language"><?php
+                    $the_key = $_SESSION['rating']['language'];
+                    if($the_key == 0){
+                        $the_key = 1;
+                    }
+                    foreach(array(
+                                1 => 'Velmi špatné',
+                                2 => 'Podprůměrné',
+                                3 => 'Průměrné',
+                                4 => 'Nadprůměrné',
+                                5 => 'Velmi dobré',
+                            ) as $key => $val){
+                        ?><option value="<?php echo $key; ?>"<?php
+                        if($key==$the_key)echo ' selected="selected"';
+                        ?>><?php echo $val; ?></option><?php
+                    }
+                    ?></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="comment">Komentář</label>
+                <textarea name="comment" class="form-control" rows="5" id="comment"><?= $_SESSION['rating']['comment']?></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" name="accept" class="btn btn-primary">Odeslat</button>
+                <a class="btn btn-default" href="info_logged/ratings">Zpět</a>
+            </div>
+        </form>
+    </div>
+</div>

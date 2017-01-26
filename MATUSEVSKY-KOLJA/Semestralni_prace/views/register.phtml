@@ -1,0 +1,39 @@
+<div class="container text-center">
+    <div class="box center">
+            <hr>
+            <h2 class="intro-text ">Registrovat</h2>
+            <hr>
+
+        <?php if($message != null) :?>
+        <div class="alert alert-danger">
+            <?php  echo $message; ?>
+        </div>
+        <?php endif; ?>
+        <form role="form-horizontal" class="cont-center" method="POST">
+            <div class="form-group">
+                <label class="control-label" for="login">Uživatelské jméno:</label>
+                <input type="text" name="login" class="form-control" id="login" placeholder="Uživatelské jméno" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="pwd">Heslo:</label>
+                <input type="password" name="password" class="form-control" id="pwd" placeholder="Heslo" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="pwd-control">Potvrzení hesla:</label>
+                <input type="password" name="password_again" class="form-control" id="pwd-control" placeholder="Heslo znovu" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="name">Jméno:</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Jméno" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="email">Email:</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" name="accept" class="btn btn-primary">Registrovat</button>
+                <a class="btn btn-default" href="users">Zpět</a>
+            </div>
+        </form>
+    </div>
+</div>

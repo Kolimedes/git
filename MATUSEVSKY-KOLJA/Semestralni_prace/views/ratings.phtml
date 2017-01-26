@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-sm-12 text-center">
+      <div class="box">
+              <hr>
+              <h2 class="intro-text ">Hodnocení</h2>
+              <hr>
+          <div>
+              <table class="table table-hover">
+                  <thead>
+                  <tr>
+                      <th>Název</th>
+                      <th>Autoři</th>
+                      <th>Bodové hodnocení</th>
+                      <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+                  if($_SESSION['posts'] != null):
+                      foreach ($_SESSION['posts'] as $post) :?>
+                          <tr>
+                              <td><?= $post['name'] ?></td>
+                              <td><?= $post['author'] ?></td>
+                              <td><?= $post['ratings']?> </td>
+                              <td>
+                                  <form method="POST" class="pull-right">
+                                      <button type="submit" name="rate" class="btn btn-info">Hodnotit</button>
+                                      <input type="hidden" name="id" value="<?php echo $post['id_posts']; ?>">
+                                  </form>
+                              </td>
+                          </tr>
+                      <?php endforeach;
+                  endif; ?>
+                  </tbody>
+                  </tbody>
+              </table>
+          </div>
+          <?php if($_SESSION['posts'] == null):?>
+              <p class="alert">Žádné články nejsou k dispozici!</p>
+          <?php endif; ?>
+      </div>
+  </div>
+</div>

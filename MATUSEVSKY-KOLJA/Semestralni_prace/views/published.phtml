@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-sm-12 text-center">
+      <div class="box">
+              <hr>
+              <h2 class="intro-text ">Publikace</h2>
+              <hr>
+          <div class="panel-group" id="accordion">
+              <?php if($_SESSION['posts'] != null):
+              foreach ($_SESSION['posts'] as $post) : ?>
+              <div class="panel panel-default">
+                  <div class="panel-heading text-center">
+                      <h3 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $post['id_posts']; ?>">
+                              <?= $post['name']?> <h6>Autoři: <?= $post['author']?></h6></a>
+                      </h3>
+                  </div>
+                  <div id="collapse<?php echo $post['id_posts']; ?>" class="panel-collapse collapse text-center">
+                      <div class="panel-body"><?= $post['abstract']?></div>
+                      <div><a class="btn btn-info" href="uploads/<?= $post['filename']?>" target="_blank" download>Stáhnout <?= $post['filename']?></a></div>
+                  </div>
+              </div>
+              <?php endforeach;
+              endif; ?>
+
+              <?php if($_SESSION['posts'] == null): ?>
+                  <p class="alert">Žádné články nejsou k dispozici!</p>
+              <?php endif; ?>
+          </div>
+      </div>
+  </div>
+</div>
